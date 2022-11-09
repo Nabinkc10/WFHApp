@@ -1,0 +1,49 @@
+﻿
+@model WFHMS.Models.ViewModel.DesignationListViewModel
+
+<div class="row">
+    <a asp-action="Create" asp-controller="Designation" class="btn btn-outline-success">
+        Add New Designation
+    </a>
+</div>
+                    
+@if(Model==null)
+{
+    <div class="row">
+        <span class="alert alert-danger">
+            NO RECORDS FOUND!
+        </span>
+    </div>
+}
+else {
+     <div class="row">
+        <table class="table">
+            <thead>
+                    <tr>
+                    <th>DesignationName</th>
+                     <th>DepartmentId</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model.Designation)
+                {
+                   <tr>
+                       <td>@item.DesignationName</td>
+                       <td>@item.DepartmentId</td>
+                       <td>
+                           <a asp-action="Edit" asp-controller="Designation" asp-route-id="@item.Id" class="btn btn-outline-success">
+                               Edit
+                           </a>
+                              <a asp-action="Delete" asp-controller="Designation" class="btn btn-outline-danger" asp-route-id="@item.Id" >
+                               Delete
+                           </a>
+                       </td>
+                   </tr>
+                }
+              
+            </tbody>
+        </table>
+    </div>
+}
+
+}
