@@ -8,7 +8,7 @@ namespace WFHMS.Models.ViewModel
         [Required(ErrorMessage = "Name is Required")]
         [StringLength(30)]
         public string Name{ get; set; }
-        public int? DepartmentId { get; set; }
+        //public int? DepartmentId { get; set; }
        
         
 
@@ -17,7 +17,7 @@ namespace WFHMS.Models.ViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? DepartmentId { get; set; }
+        //public int? DepartmentId { get; set; }
         public IEnumerable<DepartmentListViewModel> Department { get; set; }
 
     }

@@ -22,39 +22,6 @@ namespace WFHMS.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("WFHMS.Data.Entities.Configuration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Key")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Value")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Configurations");
-                });
-
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -178,39 +145,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("DesignationId");
 
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("WFHMS.Data.Entities.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notice")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notifications");
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Request", b =>
@@ -260,7 +195,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.UserNotification", b =>
@@ -296,7 +231,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("UserNotifications");
+                    b.ToTable("UserNotification");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Worklog", b =>
@@ -348,7 +283,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Worklogs");
+                    b.ToTable("Worklog");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
@@ -361,7 +296,7 @@ namespace WFHMS.Data.Migrations
             modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>
                 {
                     b.HasOne("WFHMS.Data.Entities.Department", "Department")
-                        .WithMany()
+                        .WithMany("Designations")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -416,6 +351,8 @@ namespace WFHMS.Data.Migrations
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
                 {
                     b.Navigation("Departments");
+
+                    b.Navigation("Designations");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>

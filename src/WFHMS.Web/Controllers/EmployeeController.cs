@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WFHMS.Data.Entities;
 using WFHMS.Models.ViewModel;
 
 namespace WFHMS.Web.Controllers
@@ -29,12 +30,36 @@ namespace WFHMS.Web.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult>Create(EmployeeCreateViewModel model)
         {
             var add = await PostAsync<EmployeeCreateViewModel>(model, Helper.EmployeeEndPoint);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EmployeeListViewModel model)
+        {
+            var edit = await PutAsync<EmployeeListViewModel>(Helper.EmployeeEdits, model);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(Employee model)
+        {
+            var del = await DeleteAsync<Employee>(string.Format(Helper.EmployeeDeletes, model.Id));
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

@@ -55,9 +55,9 @@ namespace WFHMS.Services.Services
            await unitOfWork.CompleteAsync();
         }
 
-        public async Task Delete(DepartmentListViewModel department)
+        public async Task Delete(Department department)
         {
-            var del = mapper.Map<DepartmentListViewModel, Department>(department);
+            var del = mapper.Map<Department>(department);
             unitOfWork.Department.Delete(del);
             await unitOfWork.CompleteAsync();
         }

@@ -12,7 +12,7 @@ namespace WFHMS.Services.Services
     {
         Task Add(DepartmentCreateViewModel department);
         Task Update(DepartmentListViewModel department);
-        Task Delete(DepartmentListViewModel departmentz);
+        Task Delete(Department model);
         Task<Department> GetAsync(int id);
         IEnumerable<DepartmentListViewModel> GetAll();
         
