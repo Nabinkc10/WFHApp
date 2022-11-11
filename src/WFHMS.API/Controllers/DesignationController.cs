@@ -15,39 +15,54 @@ namespace WFHMS.API.Controllers
         private readonly IDesignationServices designationServices;
 
 
-        public DesignationController(ILogger<DesignationController> logger,IDesignationServices designationServices)
+        public DesignationController(ILogger<DesignationController> logger, IDesignationServices designationServices)
         {
             _logger = logger;
             this.designationServices = designationServices;
         }
-        [HttpGet("getall")]
-        public async Task<IActionResult>GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            var deg = designationServices.GetAll();
+            var deg = await designationServices.GetAll();
             return Ok(deg);
         }
-        [HttpPost("Add")]
-        public async Task<IActionResult>Add(DesignationCreateViewModel designation)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var existing = await designationServices.GetAsync(id);
+            if (existing == null)
+            {
+                return BadRequest("Id Doesn't Exists!");
+            }
+            return Ok(existing);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(DesignationCreateViewModel designation)
         {
             await designationServices.Add(designation);
             return Ok();
         }
-        [HttpGet("getbyId")]
-        public async Task<IActionResult> Edit(int id,DesignationListViewModel designation)
-        {
-            var existing = designationServices.GetAsync(id);
-            if(existing == null)
-            { 
-                return RedirectToAction("Index");
-            }
-            return Ok(existing);
-        }
 
-        [HttpPut("id")]
-        public async Task<IActionResult> Edit(DesignationListViewModel designation)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(DesignationCreateViewModel designation)
         {
             await designationServices.Update(designation);
             return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var delt = await designationServices.GetAsync(id);
+            if (delt == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await designationServices.Delete(delt);
+                return Ok();
+            }
         }
     }
 }

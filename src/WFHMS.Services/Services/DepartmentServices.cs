@@ -27,7 +27,7 @@ namespace WFHMS.Services.Services
 
         public IEnumerable<DepartmentListViewModel> GetAll()
         {
-            var dept = unitOfWork.Department.GetAll();
+            var dept = unitOfWork.Department.GetAll().Result;
             var retn = dept.Select(p => new DepartmentListViewModel()
             {
                 Name = p.Name,

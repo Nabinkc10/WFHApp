@@ -9,7 +9,7 @@ namespace WFHMS.Repository.Infrastructure
 {
     public interface IRepository<entity> where entity : class
     {
-        IQueryable<entity> GetAll();
+        Task<IEnumerable<entity>> GetAll();
         Task<entity> GetAsync(int id);
         Task<entity> FindAsync(Expression<Func<entity, bool>> predicate);
         IQueryable<entity> Query();

@@ -26,7 +26,7 @@ namespace WFHMS.Services.Services
         }
         public IEnumerable<EmployeeListViewModel>GetAll()
         {
-            var emp = unitOfWork.Employee.GetAll();
+            var emp = unitOfWork.Employee.GetAll().Result;
             var retn = emp.Select(p => new EmployeeListViewModel()
             {
                 FullName = p.FullName,

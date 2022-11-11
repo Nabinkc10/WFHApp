@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,17 @@ namespace WFHMS.Repository.Repositories
 {
     public class DesignationRepository : Repository<Designation>, IDesignationRepository
     {
-        public DesignationRepository(ApplicationDbContext dbContext) :base(dbContext)
+        private readonly ApplicationDbContext _applicationDbContext;
+        public DesignationRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
+            _applicationDbContext = dbContext;
+        }
 
+        public async Task<IEnumerable<Designation>> GetAllDesignation()
+        {
+           return await _applicationDbContext.Designations.Include(s => s.Departments).ToListAsync();
+
+            
         }
     }
 }

@@ -14,13 +14,13 @@ namespace WFHMS.Data.Entities
         [StringLength(200)]
         public string DesignationName { get; set; }
 
-        [ForeignKey("Department")]
+        [ForeignKey("Departments")]
         public int DepartmentId { get; set; }
        
 
-        public virtual Department Department { get; set; }
+        public virtual Department Departments{ get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        //public virtual ICollection<Employee> Employees { get; set; }
 
     }
 }

@@ -41,7 +41,7 @@ namespace WFHMS.Web.Controllers
         }
         public async Task<T> GetAsync<T>(string relativePath, string queryString = "")
         {
-            var uriBuilder = new UriBuilder(WFHMSBaseUrl + relativePath);
+             var uriBuilder = new UriBuilder(WFHMSBaseUrl + relativePath);
             uriBuilder.Query = queryString;
             var response = await _httpClient.GetAsync(uriBuilder.Uri, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();

@@ -47,9 +47,9 @@ namespace WFHMS.Repository.Infrastructure
         {
             return _dbContext.Set<entity>().AsQueryable();
         }
-        public IQueryable<entity> GetAll()
+        public async Task<IEnumerable<entity>> GetAll()
         {
-            return _dbContext.Set<entity>();
+            return await _dbContext.Set<entity>().ToListAsync();
         }
 
 

@@ -12,7 +12,7 @@ namespace WFHMS.Repository.Infrastructure
     {
         IEmployeeRepository Employee { get; }
         IRepository<Department> Department { get; }
-        IRepository<Designation> Designation { get; }
+        IDesignationRepository Designation { get; }
         public Task<int> CompleteAsync();
     }
 }
