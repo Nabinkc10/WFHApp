@@ -6,7 +6,7 @@ namespace WFHMS.API.Controllers
 {
     [ApiController]
 
-   // [Route("api/[controiller]")]
+   [Route("api/[controller]")]  
     public class EmployeeController : Controller
     {
         private readonly ILogger<EmployeeController> _logger;
@@ -18,18 +18,49 @@ namespace WFHMS.API.Controllers
             this.employeeServices = employeeServices;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var emp = employeeServices.GetAll();
+            var emp = await employeeServices.GetAll();
             return Ok(emp);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var existing = employeeServices.GetAsync(id).Result;
+            if (existing == null)
+            {
+                return BadRequest("Id Doesn't Exists!");
+            }
+            return Ok(existing);
+        }
 
-        [HttpPost("Add")]
+        [HttpPost]
         public async Task<IActionResult> Add(EmployeeCreateViewModel employee)
         {
             await employeeServices.Add(employee);
             return Ok(employee);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(EmployeeListViewModel employee)
+        {
+            await employeeServices.Update(employee);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var delt = await employeeServices.GetAsync(id);
+            if (delt == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await employeeServices.Delete(delt);
+                return Ok();
+            }
         }
     }
 

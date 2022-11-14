@@ -1,0 +1,90 @@
+﻿@model WFHMS.Models.ViewModel.ApplyForWFHCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>ApplyForWFHCreateViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="From" class="control-label"></label>
+                <input asp-for="From" class="form-control" />
+                <span asp-validation-for="From" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="To" class="control-label"></label>
+                <input asp-for="To" class="form-control" />
+                <span asp-validation-for="To" class="text-danger"></span>
+            </div>
+        @*    <div class="form-group">
+                <label asp-for="LeaveType" class="control-label"></label>
+                <select asp-for="LeaveType" asp-items="Html.GetEnumSelectList<WFHMS.Data.Entities.Enum.LeaveType>()" class="form-control">
+                    <option selected="selected" value="">Please Select LeaveType</option>
+                </select>
+
+                <span asp-validation-for="LeaveType" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="LeaveType" class="control-label"></label>
+                <select asp-for="LeaveType" class="form-control">
+                    <option selected="selected" value="FullDay">FullDay</option>
+                    <option selected="selected" value="FirstHalf">FirstHalf</option>
+                    <option selected="selected" value="SecondHalf">SecondHalf</option>
+
+                </select>
+
+                <span asp-validation-for="LeaveType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select  asp-for="DepartmentId" asp-items="Model.Department" class="form-control" >
+                    <option selected="selected" value="">Please select Department</option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label">Ask To</label>
+                <select asp-for="EmployeeId" asp-items="Model.Employee" class="form-control">
+                    <option selected="selected" value="">Please select Your Manager</option>
+                </select>
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="AskTo" class="control-label"></label>
+                <input asp-for="AskTo" class="form-control" />
+                <span asp-validation-for="AskTo" class="text-danger"></span>
+            </div>*@
+          
+           @*     <label asp-for="DepartmentId" class="control-label"></label>
+                <input asp-for="DepartmentId" class="form-control"/>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>*@
+          
+           
+            <div class="form-group">
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

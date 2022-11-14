@@ -2,15 +2,21 @@
 {
     public static class Helper
     {
-        public const string DepartmentEndPoint = "api/department/Add";
-        public const string DepartmentGetAll = "api/department/getall";
-        public const string DepartmentEdits = "api/department/Edit";
-        public const string DepartmentDelete = "api/department/Delete";
-        public const string DesignationEndPoint = "api/designation/Add";
-        public const string DesignationGetAll = "api/designation/getall";
-        public const string DesignationEdits = "api/Designation/Edit";
-        public const string EmployeeGetAll = "api/employee/getall";
-        public const string EmployeeEndPoint = "api/employee/Add";
+        public const string DepartmentEndPoint = "api/department/{0}";
+        public const string DepartmentGetAll = "api/department";
+        public const string DepartmentEdits = "api/department/{0}";
+        public const string DepartmentDeletes = "api/department/{0}";
+        public const string DesignationEndPoint = "api/designation/{0}";
+        public const string DesignationGetAll = "api/designation";
+        public const string DesignationEdits = "api/designation/Put";
+        public const string DesignationDeletes = "api/designation/{0}";
+        public const string EmployeeGetAll = "api/employee";
+        public const string EmployeeEndPoint = "api/employee/{0}";
+        public const string EmployeeEdits = "api/employee/{0}";
+        public const string EmployeeDeletes = "api/employee/{0}";
+        public const string ApplyForWFHGetAll = "api/ApplyForWFH";
+        public const string ApplyForWFHEdits = "api/ApplyForWFH/{0}";
+        public const string ApplyForWFHDeletes = "api/ApplyForWFH/{0}";
 
     }
 

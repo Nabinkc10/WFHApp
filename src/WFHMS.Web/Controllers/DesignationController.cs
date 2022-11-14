@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WFHMS.Data.Entities;
 using WFHMS.Models.ViewModel;
 
 namespace WFHMS.Web.Controllers
@@ -20,33 +22,63 @@ namespace WFHMS.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var designdis = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
-            DesignationListViewModel model = new DesignationListViewModel();
-            model.Designation= designdis;
+            DesignationListViewModel model = new();
+            model.Designation = designdis;
             return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Create(DesignationCreateViewModel model)
-        {
+            var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            DesignationCreateViewModel model = new DesignationCreateViewModel();
+            model.Department = Desgn.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
 
-            var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationEndPoint);
-            return RedirectToAction("Index");
+            }).ToList();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            DesignationListViewModel model = new DesignationListViewModel();
+            model.Department = Desgn.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
 
+            }).ToList();
+            return View(model);
+
+        }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DesignationListViewModel model)
+        public async Task<IActionResult> Create(DesignationCreateViewModel model)
         {
-            var edit = await PutAsync<DesignationListViewModel>(Helper.DesignationEdits, model);
+
+            var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DesignationCreateViewModel model)
+        {
+            var edit = await PutAsync<DesignationCreateViewModel>(Helper.DesignationEdits, model);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(Designation model)
+        {
+            var del = await DeleteAsync<Designation>(string.Format(Helper.DesignationDeletes, model.Id));
+
             return RedirectToAction("Index");
         }
     }

@@ -10,5 +10,6 @@ namespace WFHMS.Repository.Repositories
 {
     public interface IDesignationRepository : IRepository<Designation>
     {
+       Task< IEnumerable<Designation>> GetAllDesignation();
     }
 }

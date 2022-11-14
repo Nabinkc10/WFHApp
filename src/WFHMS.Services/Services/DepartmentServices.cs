@@ -27,7 +27,7 @@ namespace WFHMS.Services.Services
 
         public IEnumerable<DepartmentListViewModel> GetAll()
         {
-            var dept = unitOfWork.Department.GetAll();
+            var dept = unitOfWork.Department.GetAll().Result;
             var retn = dept.Select(p => new DepartmentListViewModel()
             {
                 Name = p.Name,
@@ -55,9 +55,9 @@ namespace WFHMS.Services.Services
            await unitOfWork.CompleteAsync();
         }
 
-        public async Task Delete(DepartmentListViewModel department)
+        public async Task Delete(Department department)
         {
-            var del = mapper.Map<DepartmentListViewModel, Department>(department);
+            var del = mapper.Map<Department>(department);
             unitOfWork.Department.Delete(del);
             await unitOfWork.CompleteAsync();
         }

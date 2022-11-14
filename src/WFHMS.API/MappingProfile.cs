@@ -14,6 +14,8 @@ namespace WFHMS.API
             CreateMap<Designation, DesignationCreateViewModel>().ReverseMap();
             CreateMap<Employee, EmployeeListViewModel>().ReverseMap();
             CreateMap<Employee, EmployeeCreateViewModel>().ReverseMap();
+            CreateMap<ApplyForWFH, ApplyForWFHListViewModel>().ReverseMap();
+            CreateMap<ApplyForWFH, ApplyForWFHCreateViewModel>().ReverseMap();
         }
     }
     

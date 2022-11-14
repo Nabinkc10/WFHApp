@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +13,9 @@ namespace WFHMS.Models.ViewModel
         public int Id { get; set; }
         public string DesignationName { get; set; }
         public int DepartmentId { get; set; }
-        public IEnumerable<DesignationListViewModel>? Designation{ get; set; }
+        public string DepartmenName { get; set; }
+        public IEnumerable<SelectListItem>? Department { get; set; }
+        public IEnumerable<DesignationListViewModel>? Designation { get; set; }
     }
     public class DesignationCreateViewModel
     {
@@ -20,7 +23,9 @@ namespace WFHMS.Models.ViewModel
         [Required(ErrorMessage = "Name is Required")]
         [StringLength(30)]
         public string DesignationName { get; set; }
+
+        [Required(ErrorMessage = "Department is Required")]
         public int DepartmentId { get; set; }
-        public IEnumerable<DesignationListViewModel>? Designation { get; set; }
+        public IEnumerable<SelectListItem>? Department { get; set; }
     }
 }

@@ -11,8 +11,9 @@ namespace WFHMS.Services.Services
     public interface IDesignationServices
     {
         Task<Designation> GetAsync(int id);
-        IEnumerable<DesignationListViewModel> GetAll();
+        Task<IEnumerable<DesignationListViewModel>> GetAll();
         Task Add(DesignationCreateViewModel designation);
-        Task Update(DesignationListViewModel designation);
+        Task Update(DesignationCreateViewModel designation);
+        Task Delete(Designation model);
     }
 }

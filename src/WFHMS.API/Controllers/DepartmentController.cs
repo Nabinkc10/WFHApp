@@ -30,14 +30,27 @@ public class DepartmentController : ControllerBase
       
     }
 
-    [HttpGet("getall")]
+    [HttpGet]
     public async Task<IActionResult>GetAll()
     {
        var dep = departmentServices.GetAll();
        return Ok(dep);
     }
-    
-    [HttpPost("Add")]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+
+        var existing = await departmentServices.GetAsync(id);
+
+        if (existing == null)
+        {
+            return BadRequest("Id Doesn't Exists!");
+        }
+        //ViewBag.departmentList = new SelectList(departmentServices.GetAsync(), "Id", "Name");
+        return Ok(existing);
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Add(DepartmentCreateViewModel department)
     {
          await departmentServices.Add(department);
@@ -45,20 +58,7 @@ public class DepartmentController : ControllerBase
         
         
     }
-    [HttpGet("getbyId")]
-    public async Task<IActionResult> Edit(int id,DepartmentCreateViewModel department)
-    {
-
-        var existing = departmentServices.GetAsync(id);
-
-        if (existing == null)
-        {
-            return RedirectToAction("Index");
-        }
-        //ViewBag.departmentList = new SelectList(departmentServices.GetAsync(), "Id", "Name");
-        return Ok(existing);
-
-    }
+   
 
 
     [HttpPut("{id}")]
@@ -68,25 +68,22 @@ public class DepartmentController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Delete(int id, DepartmentListViewModel department)
-    {
 
-        var existing = departmentServices.GetAsync(id);
-
-        if (existing == null)
-        {
-            return RedirectToAction("Index");
-        }
-        return Ok(existing);
-    }
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteConfirmed(int id,DepartmentListViewModel department)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var existing = departmentServices.GetAsync(id);
-        await departmentServices.Delete(department);
-          return Ok();
-        
+        var del = await departmentServices.GetAsync(id);
+        if (del == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            await departmentServices.Delete(del);
+            return Ok();
+        }
+
+
     }
 
 

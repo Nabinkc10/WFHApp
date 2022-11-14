@@ -39,19 +39,25 @@ namespace WFHMS.Web.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult>Create(DepartmentCreateViewModel model)
-        {
-
-            var add = await PostAsync<DepartmentCreateViewModel>(model,Helper.DepartmentEndPoint);
-            return RedirectToAction("Index");
-
-        }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult>Create(DepartmentCreateViewModel model)
+        {
+
+            var add = await PostAsync<DepartmentCreateViewModel>(model,Helper.DepartmentGetAll);
+            return RedirectToAction("Index");
+
+        }
+        
 
         [HttpPost]
         public async Task<IActionResult> Edit(DepartmentListViewModel model)
@@ -59,16 +65,12 @@ namespace WFHMS.Web.Controllers
             var edit = await PutAsync<DepartmentListViewModel>(Helper.DepartmentEdits , model);
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public  IActionResult Delete(int? id)
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Delete(DepartmentListViewModel model)
-        {
-           var del = await DeleteAsync<DepartmentListViewModel>(Helper.DepartmentDelete);
        
+        [HttpPost]
+        public async Task<IActionResult> Delete(Department model)
+        {
+           var del = await DeleteAsync<Department>(string.Format(Helper.DepartmentDeletes, model.Id));
+
             return RedirectToAction("Index");
         }
 

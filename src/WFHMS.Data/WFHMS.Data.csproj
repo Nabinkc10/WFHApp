@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Enum\Gender.cs" />
+    <Compile Remove="Entities\Enum\Status.cs" />
+    <Compile Remove="Entities\Enum\Types.cs" />
+    <Compile Remove="Entities\Notification.cs" />
+    <Compile Remove="Entities\Request.cs" />
+    <Compile Remove="Entities\UserNotification.cs" />
+    <Compile Remove="Entities\Worklog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
@@ -21,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\Enum\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

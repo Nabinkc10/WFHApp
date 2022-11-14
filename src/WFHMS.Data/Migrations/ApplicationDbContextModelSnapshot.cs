@@ -22,7 +22,7 @@ namespace WFHMS.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("WFHMS.Data.Entities.Configuration", b =>
+            modelBuilder.Entity("WFHMS.Data.Entities.ApplyForWFH", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,9 +36,31 @@ namespace WFHMS.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Key")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LeaveType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
@@ -46,13 +68,13 @@ namespace WFHMS.Data.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Value")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Configurations");
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("ApplyForWFHs");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
@@ -69,9 +91,6 @@ namespace WFHMS.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -83,8 +102,6 @@ namespace WFHMS.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Departments");
                 });
@@ -181,38 +198,6 @@ namespace WFHMS.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("WFHMS.Data.Entities.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notice")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("WFHMS.Data.Entities.Request", b =>
                 {
                     b.Property<int>("Id")
@@ -260,7 +245,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.UserNotification", b =>
@@ -296,7 +281,7 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("UserNotifications");
+                    b.ToTable("UserNotification");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Worklog", b =>
@@ -348,25 +333,35 @@ namespace WFHMS.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Worklogs");
+                    b.ToTable("Worklog");
                 });
 
-            modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
+            modelBuilder.Entity("WFHMS.Data.Entities.ApplyForWFH", b =>
                 {
-                    b.HasOne("WFHMS.Data.Entities.Department", null)
-                        .WithMany("Departments")
-                        .HasForeignKey("DepartmentId");
-                });
-
-            modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>
-                {
-                    b.HasOne("WFHMS.Data.Entities.Department", "Department")
+                    b.HasOne("WFHMS.Data.Entities.Department", "Departments")
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
+                    b.HasOne("WFHMS.Data.Entities.Employee", "Employee")
+                        .WithMany("ApplyForWFHs")
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Departments");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>
+                {
+                    b.HasOne("WFHMS.Data.Entities.Department", "Departments")
+                        .WithMany("Designations")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departments");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Employee", b =>
@@ -405,7 +400,7 @@ namespace WFHMS.Data.Migrations
             modelBuilder.Entity("WFHMS.Data.Entities.Worklog", b =>
                 {
                     b.HasOne("WFHMS.Data.Entities.Employee", "Employee")
-                        .WithMany("worklogs")
+                        .WithMany("Worklogs")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -415,7 +410,7 @@ namespace WFHMS.Data.Migrations
 
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
                 {
-                    b.Navigation("Departments");
+                    b.Navigation("Designations");
                 });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>
@@ -425,11 +420,13 @@ namespace WFHMS.Data.Migrations
 
             modelBuilder.Entity("WFHMS.Data.Entities.Employee", b =>
                 {
+                    b.Navigation("ApplyForWFHs");
+
                     b.Navigation("Requests");
 
                     b.Navigation("UserNotifications");
 
-                    b.Navigation("worklogs");
+                    b.Navigation("Worklogs");
                 });
 #pragma warning restore 612, 618
         }
