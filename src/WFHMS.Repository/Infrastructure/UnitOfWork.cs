@@ -15,6 +15,8 @@ namespace WFHMS.Repository.Infrastructure
         private IEmployeeRepository _employeeRepository;
         private IRepository<Department> _departmentRepository;
         private IDesignationRepository _designationRepository;
+        private IRepository<ApplyForWFH> _applyforwfhRepository;
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -22,6 +24,8 @@ namespace WFHMS.Repository.Infrastructure
         public IEmployeeRepository Employee => _employeeRepository ??= new EmployeeRepository(_dbContext);
         public IRepository<Department> Department => _departmentRepository ??= new Repository<Department>(_dbContext);
         public IDesignationRepository Designation => _designationRepository ??= new DesignationRepository(_dbContext);
+        public IRepository<ApplyForWFH> ApplyForWFH => _applyforwfhRepository ??= new Repository<ApplyForWFH>(_dbContext);
+
         public async Task<int> CompleteAsync()
         {
             return await _dbContext.SaveChangesAsync();

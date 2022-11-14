@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Employee\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 

@@ -13,11 +13,13 @@ namespace WFHMS.API
                 services.AddTransient<IDepartmentServices, DepartmentServices>();
                 services.AddTransient<IDesignationServices, DesignationServices>();
                 services.AddTransient<IEmployeeService, EmployeeServices>();
+                services.AddTransient<IApplyForWFHServices, ApplyForWFHServices>(); 
 
-                #endregion
 
-                #region repository
-                services.AddTransient<IUnitOfWork, UnitOfWork>();
+            #endregion
+
+            #region repository
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
                 #endregion
             }
 

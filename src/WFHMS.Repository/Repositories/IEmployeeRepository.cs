@@ -10,5 +10,6 @@ namespace WFHMS.Repository.Repositories
 {
     public interface IEmployeeRepository : IRepository<Employee>
     {
+        //Task<IEnumerable<Employee>> GetAllEmployee();
     }
 }

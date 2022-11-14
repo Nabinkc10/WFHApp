@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WFHMS.Data.Entities.Enum;
 
 namespace WFHMS.Models.ViewModel
 {
     public class EmployeeListViewModel
     {
-
+        public int Id { get; set; }
         [StringLength(200)]
         public string FullName { get; set; }
         public int EmployeeCode { get; set; }
@@ -44,8 +45,9 @@ namespace WFHMS.Models.ViewModel
         public string PhoneNumber { get; set; }
         [StringLength(300)]
         public string Email { get; set; }
-        public int DesignationId { get; set; }
-   
+        public int DesignationId { get; set; }  
+        public IEnumerable<EmployeeCreateViewModel> Employee { get; set; }
+
 
     }
 }

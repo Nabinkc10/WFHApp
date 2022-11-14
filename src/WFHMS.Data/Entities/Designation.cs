@@ -20,7 +20,7 @@ namespace WFHMS.Data.Entities
 
         public virtual Department Departments{ get; set; }
 
-        //public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
 
     }
 }

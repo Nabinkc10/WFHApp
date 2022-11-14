@@ -11,8 +11,10 @@ namespace WFHMS.Services.Services
     public interface IEmployeeService
     {
 
-        IEnumerable<EmployeeListViewModel> GetAll();
+        Task <IEnumerable<EmployeeListViewModel>>GetAll();
         Task<Employee> GetAsync(int id);
         Task Add(EmployeeCreateViewModel model);
+        Task Update(EmployeeListViewModel employee);
+        Task Delete(Employee model);
     }
 }

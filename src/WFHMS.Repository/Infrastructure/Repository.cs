@@ -69,5 +69,10 @@ namespace WFHMS.Repository.Infrastructure
         {
             _dbContext.Set<entity>().UpdateRange(entities);
         }
+
+        public IQueryable<entity> GetAllWFH()
+        {
+            return _dbContext.Set<entity>();
+        }
     }
 }

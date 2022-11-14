@@ -18,6 +18,8 @@ namespace WFHMS.Web.Controllers
             _httpClient = httpClient;
             this.configure = configure;
         }
+        [HttpGet]
+
         public async Task<IActionResult> Index()
         {
             var employdis = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
@@ -44,7 +46,7 @@ namespace WFHMS.Web.Controllers
         [HttpPost]
         public async Task<IActionResult>Create(EmployeeCreateViewModel model)
         {
-            var add = await PostAsync<EmployeeCreateViewModel>(model, Helper.EmployeeEndPoint);
+            var add = await PostAsync<EmployeeCreateViewModel>(model, Helper.EmployeeGetAll);
             return RedirectToAction("Index");
         }
         [HttpPost]

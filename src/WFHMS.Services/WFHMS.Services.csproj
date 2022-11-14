@@ -13,22 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Services\ConfigurationServices.cs" />
+    <Compile Include="Services\ApplyForWFHServices.cs" />
     <Compile Include="Services\DepartmentServices.cs" />
     <Compile Include="Services\DesignationServices.cs" />
     <Compile Include="Services\EmployeeServices.cs" />
-    <Compile Include="Services\IConfigurationServices.cs" />
+    <Compile Include="Services\IApplyForWFHServices.cs" />
     <Compile Include="Services\IDepartmentServices.cs" />
     <Compile Include="Services\IDesignationServices.cs" />
     <Compile Include="Services\IEmployeeServices.cs" />
-    <Compile Include="Services\INotificationServices.cs" />
-    <Compile Include="Services\IRequestServices.cs" />
-    <Compile Include="Services\IUserNotificationServices.cs" />
-    <Compile Include="Services\IWorklogServices.cs" />
-    <Compile Include="Services\NotificationServices.cs" />
-    <Compile Include="Services\RequestServices.cs" />
-    <Compile Include="Services\UserNotificationServices.cs" />
-    <Compile Include="Services\WorklogServices.cs" />
   </ItemGroup>
 
   <ItemGroup>

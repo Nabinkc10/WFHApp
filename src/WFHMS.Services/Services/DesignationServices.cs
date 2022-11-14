@@ -13,7 +13,7 @@ using WFHMS.Repository.Infrastructure;
 namespace WFHMS.Services.Services
 {
     public class DesignationServices : IDesignationServices
-    {
+    { 
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         public DesignationServices(IUnitOfWork unitOfWork, IMapper mapper)

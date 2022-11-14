@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repositories\ConfigurationRepository.cs" />
+    <Compile Remove="Repositories\IConfigurationRepository.cs" />
+    <Compile Remove="Repositories\INotificationRepository.cs" />
+    <Compile Remove="Repositories\IRequestRepository.cs" />
+    <Compile Remove="Repositories\IUserNotificationRepository.cs" />
+    <Compile Remove="Repositories\IWorklogRepository.cs" />
+    <Compile Remove="Repositories\NotificationRepository.cs" />
+    <Compile Remove="Repositories\RequestRepository.cs" />
+    <Compile Remove="Repositories\UserNotificationRepository.cs" />
+    <Compile Remove="Repositories\WorklogRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
   </ItemGroup>
 

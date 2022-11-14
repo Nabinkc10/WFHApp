@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WFHMS.Data;
 
@@ -11,9 +12,10 @@ using WFHMS.Data;
 namespace WFHMS.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221113142400_EmployeeAdded")]
+    partial class EmployeeAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,61 +23,6 @@ namespace WFHMS.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("WFHMS.Data.Entities.ApplyForWFH", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullName")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("LeaveType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reason")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("ApplyForWFHs");
-                });
 
             modelBuilder.Entity("WFHMS.Data.Entities.Department", b =>
                 {
@@ -336,23 +283,6 @@ namespace WFHMS.Data.Migrations
                     b.ToTable("Worklog");
                 });
 
-            modelBuilder.Entity("WFHMS.Data.Entities.ApplyForWFH", b =>
-                {
-                    b.HasOne("WFHMS.Data.Entities.Department", "Departments")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WFHMS.Data.Entities.Employee", "Employee")
-                        .WithMany("ApplyForWFHs")
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Departments");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("WFHMS.Data.Entities.Designation", b =>
                 {
                     b.HasOne("WFHMS.Data.Entities.Department", "Departments")
@@ -400,7 +330,7 @@ namespace WFHMS.Data.Migrations
             modelBuilder.Entity("WFHMS.Data.Entities.Worklog", b =>
                 {
                     b.HasOne("WFHMS.Data.Entities.Employee", "Employee")
-                        .WithMany("Worklogs")
+                        .WithMany("worklogs")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -420,13 +350,11 @@ namespace WFHMS.Data.Migrations
 
             modelBuilder.Entity("WFHMS.Data.Entities.Employee", b =>
                 {
-                    b.Navigation("ApplyForWFHs");
-
                     b.Navigation("Requests");
 
                     b.Navigation("UserNotifications");
 
-                    b.Navigation("Worklogs");
+                    b.Navigation("worklogs");
                 });
 #pragma warning restore 612, 618
         }

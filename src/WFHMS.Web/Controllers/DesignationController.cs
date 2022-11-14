@@ -53,6 +53,12 @@ namespace WFHMS.Web.Controllers
             return View(model);
 
         }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(DesignationCreateViewModel model)
         {

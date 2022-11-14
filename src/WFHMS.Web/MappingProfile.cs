@@ -10,6 +10,7 @@ namespace WFHMS.Models.ViewModel
             CreateMap<Department, DepartmentListViewModel>().ReverseMap();
             CreateMap<Designation, DesignationListViewModel>().ReverseMap();
             CreateMap<Employee, EmployeeListViewModel>().ReverseMap();
+            CreateMap<ApplyForWFH, ApplyForWFHListViewModel>().ReverseMap();
         }
     }
     

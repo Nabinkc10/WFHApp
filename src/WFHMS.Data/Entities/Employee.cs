@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WFHMS.Data.Entities.Enum;
 
 namespace WFHMS.Data.Entities
 {
@@ -15,7 +16,7 @@ namespace WFHMS.Data.Entities
         public int EmployeeCode { get; set; }
         [StringLength(30)]
         public string Gender { get; set; }
-        public string PicturePath { get; set; }
+        public string? PicturePath { get; set; }
         [StringLength(300)]
         public string Address { get; set; }
          
@@ -27,8 +28,11 @@ namespace WFHMS.Data.Entities
         [ForeignKey("Designation")]
         public int DesignationId { get; set; }
         public virtual Designation Designation { get; set; }
-        public virtual ICollection<Worklog> worklogs { get; set; }
-        public virtual ICollection<Request> Requests { get; set; }
-        public virtual ICollection<UserNotification> UserNotifications { get; set; }
+
+        public virtual ICollection<ApplyForWFH> ApplyForWFHs { get; set; }
+        //public virtual ICollection<Worklog> Worklogs { get; set; }
+        //public virtual ICollection<Request> Requests { get; set; }
+        //public virtual ICollection<UserNotification> UserNotifications { get; set; }
+
     }
 }

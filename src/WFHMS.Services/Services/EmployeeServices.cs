@@ -24,11 +24,13 @@ namespace WFHMS.Services.Services
         {
             return await unitOfWork.Employee.GetAsync(id);
         }
-        public IEnumerable<EmployeeListViewModel>GetAll()
+        public async Task<IEnumerable<EmployeeListViewModel>>GetAll()
         {
-            var emp = unitOfWork.Employee.GetAll().Result;
+            var emp = await unitOfWork.Employee.GetAll();
+
             var retn = emp.Select(p => new EmployeeListViewModel()
             {
+                Id = p.Id,
                 FullName = p.FullName,
                 EmployeeCode = p.EmployeeCode,
                 Gender = p.Gender,
@@ -37,7 +39,8 @@ namespace WFHMS.Services.Services
                 DOB = p.DOB,
                 PhoneNumber = p.PhoneNumber,
                 Email = p.Email,
-                DesignationId = p.DesignationId,
+                DesignationId = p.DesignationId
+                
             });
             return retn;
 
@@ -48,6 +51,18 @@ namespace WFHMS.Services.Services
             await unitOfWork.Employee.Add(employ);
             await unitOfWork.CompleteAsync();
         }
+        public async Task Update(EmployeeListViewModel employee)
+        {
+            var edit = mapper.Map<EmployeeListViewModel, Employee>(employee);
+            await unitOfWork.Employee.Update(edit);
+            await unitOfWork.CompleteAsync();
+        }
 
+        public async Task Delete(Employee employee)
+        {
+            var delt = mapper.Map<Employee>(employee);
+            unitOfWork.Employee.Delete(delt);
+            await unitOfWork.CompleteAsync();
+        }
     }
 }

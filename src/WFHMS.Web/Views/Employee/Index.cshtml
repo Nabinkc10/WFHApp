@@ -1,0 +1,75 @@
+﻿@model WFHMS.Models.ViewModel.EmployeeListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h1>Index</h1>
+
+<h4>EmployeeListViewModel</h4>
+<hr />
+<div class="row">
+    <a asp-action="Create" asp-controller="Employee" class="btn btn-outline-success">
+        Add New Employee
+    </a>
+</div>
+                    
+@if(Model==null)
+{
+    <div class="row">
+        <span class="alert alert-danger">
+            NO RECORDS FOUND!
+        </span>
+    </div>
+}
+else {
+     <div class="row">
+        <table class="table">
+            <thead>
+                    <tr>
+                    <th>Picture</th>
+                    <th>FullName</th>
+                     <th>EmployeeCode</th>
+                     <th>Gender</th>
+                     <th>PicturePath</th>
+                     <th>Address</th>
+                     <th>DOB</th>
+                     <th>PhoneNumberr</th>
+                     <th>Email</th>
+                     <th>DesignationId</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model.Employee)
+                {
+                   <tr>
+                       <td>
+                       <img src="@item.PicturePath" height="100" width="110"/>
+                       </td>
+                       <td>@item.FullName</td>
+                       <td>@item.EmployeeCode</td>
+                       <td>@item.Gender</td>
+                       <td>@item.PicturePath</td>
+                       <td>@item.Address</td>
+                       <td>@item.DOB</td>
+                       <td>@item.PhoneNumber</td>
+                       <td>@item.Email</td>
+                       <td>@item.DesignationId</td>
+                       <td>
+                           <a asp-action="Edit" asp-controller="Employee" asp-route-id="@item.Id" class="btn btn-outline-success">
+                               Edit
+                           </a>
+                              <a asp-action="Delete" asp-controller="Employee" class="btn btn-outline-danger" asp-route-id="@item.Id" >
+                               Delete
+                           </a>
+                       </td>
+                   </tr>
+                }
+              
+            </tbody>
+        </table>
+    </div>
+}
+
+}
