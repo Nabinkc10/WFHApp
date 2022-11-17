@@ -18,9 +18,10 @@ namespace WFHMS.Models.ViewModel
         public DateTime To { get; set; }
         public String LeaveType { get; set; }
         public int? EmployeeId { get; set; }
+        public string EmployeeName { get; set; }    
         public string Reason { get; set; }
         
-        //public string Name { get; set; }
+        public string DepartmentName { get; set; }
         public int DepartmentId { get; set; }
         public IEnumerable<SelectListItem> Department { get; set; }
         public IEnumerable<SelectListItem> Employee { get; set; }

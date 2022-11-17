@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,22 +27,28 @@ namespace WFHMS.Services.Services
         }
 
 
-        public IEnumerable<DepartmentListViewModel> GetAll()
+        public async Task<IEnumerable<DepartmentListViewModel>> GetAll()
         {
-            var dept = unitOfWork.Department.GetAll().Result;
+            var dept =await unitOfWork.Department.GetAll();
+            
             var retn = dept.Select(p => new DepartmentListViewModel()
             {
                 Name = p.Name,
                 Id = p.Id,
                 //DepartmentId =p.DepartmentId
             });
+           
             return retn;
 
         }
 
         public async Task Add(DepartmentCreateViewModel department)
         {
-            
+            Department existingDepartment = await unitOfWork.Department.SingleOrDefaultAsync(m => m.Name == department.Name);
+            if(existingDepartment != null)
+            {
+              unitOfWork.Dispose();
+            }
             var data = mapper.Map<DepartmentCreateViewModel, Department>(department);
             await unitOfWork.Department.Add(data);
             await unitOfWork.CompleteAsync();

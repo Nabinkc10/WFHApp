@@ -21,7 +21,7 @@ namespace WFHMS.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var emp = await employeeServices.GetAll();
+            var emp = employeeServices.GetAll();
             return Ok(emp);
         }
         [HttpGet("{id}")]

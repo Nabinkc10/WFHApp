@@ -8,7 +8,7 @@
         public const string DepartmentDeletes = "api/department/{0}";
         public const string DesignationEndPoint = "api/designation/{0}";
         public const string DesignationGetAll = "api/designation";
-        public const string DesignationEdits = "api/designation/Put";
+        public const string DesignationEdits = "api/designation/{0}";
         public const string DesignationDeletes = "api/designation/{0}";
         public const string EmployeeGetAll = "api/employee";
         public const string EmployeeEndPoint = "api/employee/{0}";

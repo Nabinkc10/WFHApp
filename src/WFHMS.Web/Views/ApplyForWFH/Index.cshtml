@@ -24,9 +24,9 @@ else
                     <th>From</th>
                     <th>To</th>
                     <th>LeaveTypes</th>
-                    <th>EmployeeID</th> 
+                    <th>EmployeeName</th> 
                     <th>Reason</th>
-                    <th>DepartmentId</th>
+                    <th>DepartmentName</th>
                     
                 </tr>
             </thead>
@@ -38,9 +38,9 @@ else
                         <td>@item.From</td>
                         <td>@item.To</td>
                         <td>@item.LeaveType</td>
-                        <td>@item.EmployeeId</td>
+                        <td>@item.EmployeeName</td>
                         <td>@item.Reason</td>
-                        <td>@item.DepartmentId</td>
+                        <td>@item.DepartmentName</td>
                         
                         <td>
                             <a asp-action="Edit" asp-controller="ApplyForWFH" asp-route-id="@item.Id" class="btn btn-outline-success">

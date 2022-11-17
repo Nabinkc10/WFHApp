@@ -13,7 +13,8 @@ namespace WFHMS.Data.Entities
         
         [StringLength(200)]
         public string Name { get; set; }
-      
+
         public virtual ICollection<Designation> Designations { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

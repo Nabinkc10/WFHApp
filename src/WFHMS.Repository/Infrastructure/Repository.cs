@@ -42,6 +42,10 @@ namespace WFHMS.Repository.Infrastructure
         {
             return await _dbContext.Set<entity>().FirstOrDefaultAsync(predicate);
         }
+        public async Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate)
+        {
+            return await _dbContext.Set<entity>().FirstOrDefaultAsync(predicate);
+        }
 
         public IQueryable<entity> Query()
         {
@@ -74,5 +78,7 @@ namespace WFHMS.Repository.Infrastructure
         {
             return _dbContext.Set<entity>();
         }
+
+      
     }
 }

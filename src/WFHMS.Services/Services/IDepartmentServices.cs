@@ -14,7 +14,7 @@ namespace WFHMS.Services.Services
         Task Update(DepartmentListViewModel department);
         Task Delete(Department model);
         Task<Department> GetAsync(int id);
-        IEnumerable<DepartmentListViewModel> GetAll();
+        Task<IEnumerable<DepartmentListViewModel>>GetAll();
         
     }
 }

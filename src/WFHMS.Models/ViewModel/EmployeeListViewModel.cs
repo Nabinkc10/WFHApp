@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,10 +22,19 @@ namespace WFHMS.Models.ViewModel
         public string Address { get; set; }
 
         public DateTime DOB { get; set; }
+        [Required(ErrorMessage = "Phone Number is Required!")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Email is Required!")]
+        [DataType(DataType.EmailAddress)]
         [StringLength(300)]
         public string Email { get; set; }
+        public string DepartmentName { get; set; }
+        public int DepartmentId { get; set; }
+        public string DesignationName { get; set; }
         public int DesignationId { get; set; }
+        public IEnumerable<SelectListItem> Department { get; set; }
+        public IEnumerable<SelectListItem> Designation { get; set; }
         public IEnumerable<EmployeeListViewModel>? Employee { get; set; }
 
     }
@@ -42,10 +52,19 @@ namespace WFHMS.Models.ViewModel
         public string Address { get; set; }
 
         public DateTime DOB { get; set; }
+        [Required(ErrorMessage = "Phone Number is Required!")]
+        [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Email is Required!")]
+        [DataType(DataType.EmailAddress)]
         [StringLength(300)]
         public string Email { get; set; }
-        public int DesignationId { get; set; }  
+        public string DepartmentName { get; set; }
+        public int DepartmentId { get; set; }
+        public string DesignationName { get; set; }
+        public int DesignationId { get; set; }
+        public IEnumerable<SelectListItem> Department { get; set; }
+        public IEnumerable<SelectListItem> Designation { get; set; }
         public IEnumerable<EmployeeCreateViewModel> Employee { get; set; }
 
 

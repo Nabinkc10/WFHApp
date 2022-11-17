@@ -4,8 +4,9 @@ namespace WFHMS.Models.ViewModel
     public class DepartmentCreateViewModel
     {
 
-         
-        [Required(ErrorMessage = "Name is Required")]
+
+        [Required(ErrorMessage = "DepartmentName Is Required!")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
         [StringLength(30)]
         public string Name{ get; set; }
         //public int? DepartmentId { get; set; }
@@ -16,6 +17,9 @@ namespace WFHMS.Models.ViewModel
     public class DepartmentListViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "DepartmentName Is Required!")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [StringLength(30)]
         public string Name { get; set; }
         //public int? DepartmentId { get; set; }
         public IEnumerable<DepartmentListViewModel> Department { get; set; }

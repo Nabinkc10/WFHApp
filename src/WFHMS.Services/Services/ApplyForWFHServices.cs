@@ -29,23 +29,6 @@ namespace WFHMS.Services.Services
         public IEnumerable<ApplyForWFHListViewModel> GetAll()
         {
             var apply = _unitOfWork.ApplyForWFH.GetAllWFH();
-            //ApplyForWFHListViewModel applyForWFHCreateViewModel = new ApplyForWFHListViewModel();
-            //List<SelectListItem> departments = _unitOfWork.Department.Query().OrderBy(p => p.Id).Select(p => new SelectListItem
-            //{
-            //    Selected = true,
-            //    Value = p.Id.ToString(),
-            //    Text = p.Name
-            //}).ToList();
-            //applyForWFHCreateViewModel.Department = departments;
-            //List<SelectListItem> employees = _unitOfWork.Employee.Query().OrderBy(p => p.Id).Select(p => new SelectListItem
-            //{
-            //    Selected = true,
-            //    Value = p.Id.ToString(),
-            //    Text = p.FullName
-            //}).ToList();
-            //applyForWFHCreateViewModel.Employee = employees;
-
-
             var retn = apply.Select(p => new ApplyForWFHListViewModel()
             {
                 Id = p.Id,
@@ -54,8 +37,8 @@ namespace WFHMS.Services.Services
                 To = p.To,
                 LeaveType = p.LeaveType,
                 EmployeeId= p.EmployeeId,
-                DepartmentId = p.DepartmentId,
-               
+                DepartmentName = p.Departments.Name,
+                EmployeeName = p.Employee.FullName,
                 Reason = p.Reason,
             });
             return retn;

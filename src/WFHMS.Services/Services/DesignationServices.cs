@@ -27,20 +27,19 @@ namespace WFHMS.Services.Services
         }
         public async Task<IEnumerable<DesignationListViewModel>> GetAll()
         {
-            var deg = await unitOfWork.Designation.GetAllDesignation();
-
-                
+            var deg = await unitOfWork.Designation.GetAllDesignation();   
             var ret = deg.Select(p => new DesignationListViewModel()
             {
                 DesignationName = p.DesignationName,
                 Id = p.Id,
                 DepartmentId = p.DepartmentId,
-                DepartmenName=p.Departments.Name
+                DepartmentName=p.Departments.Name
             });
             return ret;
         }
         public async Task Add(DesignationCreateViewModel designation)
         {
+
             var data = mapper.Map<DesignationCreateViewModel, Designation>(designation);
             await unitOfWork.Designation.Add(data);
             await unitOfWork.CompleteAsync();

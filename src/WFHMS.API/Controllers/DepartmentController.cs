@@ -33,7 +33,7 @@ public class DepartmentController : ControllerBase
     [HttpGet]
     public async Task<IActionResult>GetAll()
     {
-       var dep = departmentServices.GetAll();
+       var dep = await departmentServices.GetAll();
        return Ok(dep);
     }
     [HttpGet("{id}")]
@@ -46,6 +46,7 @@ public class DepartmentController : ControllerBase
         {
             return BadRequest("Id Doesn't Exists!");
         }
+        
         //ViewBag.departmentList = new SelectList(departmentServices.GetAsync(), "Id", "Name");
         return Ok(existing);
     }
@@ -53,6 +54,7 @@ public class DepartmentController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add(DepartmentCreateViewModel department)
     {
+       
          await departmentServices.Add(department);
         return Ok();
         

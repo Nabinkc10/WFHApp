@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using WFHMS.Data.Entities;
 using WFHMS.Models.ViewModel;
@@ -34,6 +37,11 @@ namespace WFHMS.Web.Controllers
             model.Department = deptdis;
             return View(model);
         }
+        //public JsonResult IsDepartmentNameExist(string Name)
+        //{
+        //    string query = "select * from Department where DepartmentId = {0}"
+        //    return Json();
+        //}
         [HttpGet]
         public async Task<IActionResult>Create()
         {
@@ -42,12 +50,14 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
+            return View(edit);
         }
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            return View();
+            var Delt = GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentDeletes, id)).Result;
+            return View(Delt);
         }
         [HttpPost]
         public async Task<IActionResult>Create(DepartmentCreateViewModel model)

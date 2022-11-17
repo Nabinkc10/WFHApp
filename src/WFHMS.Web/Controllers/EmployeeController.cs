@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Differencing;
 using WFHMS.Data.Entities;
 using WFHMS.Models.ViewModel;
 
@@ -22,25 +24,60 @@ namespace WFHMS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var employdis = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+            var EmployGet = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
             EmployeeListViewModel model = new EmployeeListViewModel();
-            model.Employee = employdis;
+            model.Employee = EmployGet;
             return View(model);
         }
         [HttpGet]
         public async Task<IActionResult>Create()
         {
-            return View();
+            var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
+            EmployeeCreateViewModel model = new EmployeeCreateViewModel();
+            model.Department = DeptGet.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
+            }).ToList();
+            model.Designation = DegGet.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.DesignationName
+            }).ToList();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
+            var edit = await GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeEdits, id));
+            EmployeeListViewModel model = new EmployeeListViewModel();
+            model = edit;
+            model.Department = DeptGet.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Name
+            }).ToList();
+            model.Designation = DegGet.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.DesignationName
+            }).ToList();
+            return View(model);
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+           
+            var getempbyId = GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeDeletes, id)).Result;
+            EmployeeListViewModel model = new EmployeeListViewModel();
+            model.DepartmentName = getempbyId.DepartmentName;
+            model.DesignationName = getempbyId.DesignationName;
+            model = getempbyId;
+            return View(model);
+            
         }
 
         [HttpPost]

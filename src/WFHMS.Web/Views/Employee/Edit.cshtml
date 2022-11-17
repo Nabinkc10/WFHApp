@@ -7,18 +7,13 @@
 
 <h1>Edit</h1>
 
-<h4>EmployeeListViewModel</h4>
+<h4>Employee</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-controller="Employee" asp-action="Edit">
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="FullName" class="control-label"></label>
                 <input asp-for="FullName" class="form-control" />
@@ -73,8 +68,17 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DesignationId" class="control-label"></label>
-                <input asp-for="DesignationId" class="form-control" />
+                <label asp-for="DepartmentName" class="control-label"></label>
+                <select asp-for="DepartmentId" asp-items="Model.Department" class="form-control">
+                    <option selected="selected" value="">Please select Department</option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DesignationName" class="control-label"></label>
+                <select asp-for="DesignationId" asp-items="Model.Designation" class="form-control">
+                    <option selected="selected" value="">Please select Designation</option>
+                </select>
                 <span asp-validation-for="DesignationId" class="text-danger"></span>
             </div>
             <div class="form-group">

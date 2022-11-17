@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using WFHMS.Data.Entities;
 
 namespace WFHMS.Repository.Infrastructure
 {
@@ -22,5 +23,6 @@ namespace WFHMS.Repository.Infrastructure
 
         void Delete(entity entity);
         void DeleteRange(IEnumerable<entity> entities);
+        Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate);
     }
 }

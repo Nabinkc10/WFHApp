@@ -43,7 +43,9 @@ namespace WFHMS.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            var edit = await GetAsync<DesignationListViewModel>(String.Format(Helper.DesignationEdits, id));
             DesignationListViewModel model = new DesignationListViewModel();
+            model = edit;
             model.Department = Desgn.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
@@ -56,15 +58,20 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            return View();
+            var getdegbyId = GetAsync<DesignationListViewModel>(String.Format(Helper.DesignationDeletes, id)).Result;
+            return View(getdegbyId);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(DesignationCreateViewModel model)
         {
-
-            var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
+                return RedirectToAction("Index");
+            }
+            return View(model);
+          
         }
 
 
