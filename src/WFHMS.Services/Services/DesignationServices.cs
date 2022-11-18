@@ -39,7 +39,12 @@ namespace WFHMS.Services.Services
         }
         public async Task Add(DesignationCreateViewModel designation)
         {
+            Designation existingDesignation = await unitOfWork.Designation.SingleOrDefaultAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
+            if (existingDesignation != null)
+            {
 
+                unitOfWork.Dispose();
+            }
             var data = mapper.Map<DesignationCreateViewModel, Designation>(designation);
             await unitOfWork.Designation.Add(data);
             await unitOfWork.CompleteAsync();

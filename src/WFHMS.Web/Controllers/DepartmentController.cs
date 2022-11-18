@@ -50,8 +50,23 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
-            return View(edit);
+            try
+            {
+                var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
+                if(edit == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(edit);
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", "Unable to do this Task..Please contat your admin");
+            }
+            return View("Index");
+            //var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
+            //return View(edit);
         }
         [HttpGet]
         public IActionResult Delete(int? id)

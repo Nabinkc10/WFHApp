@@ -10,9 +10,6 @@ namespace WFHMS.Models.ViewModel
         [StringLength(30)]
         public string Name{ get; set; }
         //public int? DepartmentId { get; set; }
-       
-        
-
     }
     public class DepartmentListViewModel
     {

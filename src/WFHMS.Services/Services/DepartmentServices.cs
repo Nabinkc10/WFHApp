@@ -46,7 +46,7 @@ namespace WFHMS.Services.Services
         {
             Department existingDepartment = await unitOfWork.Department.SingleOrDefaultAsync(m => m.Name == department.Name);
             if(existingDepartment != null)
-            {
+            { 
               unitOfWork.Dispose();
             }
             var data = mapper.Map<DepartmentCreateViewModel, Department>(department);
@@ -58,6 +58,11 @@ namespace WFHMS.Services.Services
         }
         public async Task Update(DepartmentListViewModel department)
         {
+            Department existingDepartment = await unitOfWork.Department.SingleOrDefaultAsync(m => m.Name == department.Name);
+            if (existingDepartment != null)
+            {
+                unitOfWork.Dispose();
+            }
             var edit = mapper.Map<DepartmentListViewModel, Department>(department);
            await unitOfWork.Department.Update(edit);
            await unitOfWork.CompleteAsync();

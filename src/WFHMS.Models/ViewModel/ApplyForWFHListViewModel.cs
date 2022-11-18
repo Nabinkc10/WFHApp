@@ -14,7 +14,9 @@ namespace WFHMS.Models.ViewModel
     {
         public int Id { get; set; }
         public string FullName { get; set; }
+        [Required]
         public DateTime From { get; set; }
+        [Required]
         public DateTime To { get; set; }
         public String LeaveType { get; set; }
         public int? EmployeeId { get; set; }
@@ -35,6 +37,8 @@ namespace WFHMS.Models.ViewModel
         [Required(ErrorMessage = "Name is Required")]
         public string FullName { get; set; }
          public DateTime From { get; set; }
+        [Required]
+        
         public DateTime To { get; set; }
 
         public string LeaveType { get; set; }
