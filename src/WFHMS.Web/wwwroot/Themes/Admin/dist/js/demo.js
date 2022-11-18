@@ -8,6 +8,8 @@
 /* eslint-disable camelcase */
 
 (function ($) {
+
+
     'use strict'
 
     //setTimeout(function () {
@@ -674,6 +676,8 @@
         $logo.addClass(color)
     }, true).append($clear_btn)
     $container.append($brand_variants)
+
+    
 
     var active_brand_color = null
     $('.brand-link')[0].classList.forEach(function (className) {

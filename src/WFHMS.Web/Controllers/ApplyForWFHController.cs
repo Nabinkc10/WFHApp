@@ -27,10 +27,6 @@ namespace WFHMS.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //ViewBag.departmentList = GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-
-//            GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll, "Id", "Name");
-
             var Apply = await GetAsync<IEnumerable<ApplyForWFHListViewModel>>(Helper.ApplyForWFHGetAll);
             ApplyForWFHListViewModel model = new ApplyForWFHListViewModel();
             model.ApplyForWFHs = Apply;
@@ -39,15 +35,15 @@ namespace WFHMS.Web.Controllers
         [HttpGet] 
         public async Task<IActionResult> Create()
         {
-            var Apply = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-            var Employee = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+            var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
             ApplyForWFHCreateViewModel model = new ApplyForWFHCreateViewModel();
-            model.Department = Apply.Select(p => new SelectListItem
+            model.Department = DeptGetAll.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
                 Text = p.Name
             }).ToList();
-            model.Employee = Employee.Select(p => new SelectListItem
+            model.Employee = EmployeeGetAll.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
                 Text = p.FullName
@@ -57,15 +53,17 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult>Edit(int id)
         {
-            var Apply = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-            var Employee = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+            var edit = await GetAsync<ApplyForWFHListViewModel>(String.Format(Helper.ApplyForWFHEdits, id));
+            var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+            var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
             ApplyForWFHListViewModel model = new ApplyForWFHListViewModel();
-            model.Department = Apply.Select(p => new SelectListItem
+            model = edit;
+            model.Department = DeptGetAll.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
                 Text = p.Name
             }).ToList();
-            model.Employee = Employee.Select(p => new SelectListItem
+            model.Employee = EmployeeGetAll.Select(p => new SelectListItem
             {
                 Value = p.Id.ToString(),
                 Text = p.FullName
@@ -77,7 +75,16 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            return View();
+            var delete = GetAsync<ApplyForWFHListViewModel>(String.Format(Helper.ApplyForWFHDeletes, id)).Result;
+            var empid = delete.EmployeeId;
+            var deptid = delete.DepartmentId;
+            ApplyForWFHListViewModel model = new ApplyForWFHListViewModel();
+            model = delete;
+            var EmployeeName = GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeDeletes, empid)).Result;
+            var DepartmentName = GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, deptid)).Result;
+            model.EmployeeName = EmployeeName.FullName;
+            model.DepartmentName = DepartmentName.Name;
+            return View(model);
         }
 
         [HttpPost] 

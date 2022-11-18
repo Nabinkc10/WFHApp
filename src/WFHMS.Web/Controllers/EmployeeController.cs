@@ -70,14 +70,22 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-           
             var getempbyId = GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeDeletes, id)).Result;
+            var deptId = getempbyId.DepartmentId;
+            var designationId = getempbyId.DesignationId;
+            var deptName = GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentDeletes, deptId)).Result;
+            var designationName = GetAsync<DesignationListViewModel>(String.Format(Helper.DesignationDeletes, designationId)).Result;
             EmployeeListViewModel model = new EmployeeListViewModel();
-            model.DepartmentName = getempbyId.DepartmentName;
-            model.DesignationName = getempbyId.DesignationName;
             model = getempbyId;
+            model.DepartmentName = deptName.Name;
+            model.DesignationName = designationName.DesignationName;
             return View(model);
-            
+
+            //var getempbyId = GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeDeletes, id)).Result;
+            //EmployeeListViewModel model = new EmployeeListViewModel();
+            //model.DepartmentName= getempbyId.DepartmentName;
+            //return View(model);
+
         }
 
         [HttpPost]
