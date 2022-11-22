@@ -54,9 +54,17 @@ public class DepartmentController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add(DepartmentCreateViewModel department)
     {
-       
-         await departmentServices.Add(department);
-        return Ok();
+      if(ModelState.IsValid)
+        {
+            await departmentServices.Add(department);
+            return Ok();
+        }
+        else
+        {
+            return BadRequest("Name cannot be repeated!");
+        }
+        //await departmentServices.Add(department);
+        //return Ok();
         
         
     }

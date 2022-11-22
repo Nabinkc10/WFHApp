@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\42vnn1wz.4pj~" />
     <None Remove="Views\Shared\bmlvfeib.rna~" />
   </ItemGroup>
 
@@ -27,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Account\AccessDenied.cshtml" />
+    <None Include="Views\Account\Login.cshtml" />
+    <None Include="Views\Account\Register.cshtml" />
     <None Include="wwwroot\Themes\Admin\dist\css\adminlte.css" />
     <None Include="wwwroot\Themes\Admin\dist\css\adminlte.css.map" />
     <None Include="wwwroot\Themes\Admin\dist\css\adminlte.min.css" />

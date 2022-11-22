@@ -61,10 +61,11 @@ namespace WFHMS.Web.Controllers
             }
             catch (Exception ex)
             {
-
+                
                 ModelState.AddModelError("", "Unable to do this Task..Please contat your admin");
+                return View("Edit");
             }
-            return View("Index");
+            //return View(edit);
             //var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
             //return View(edit);
         }
@@ -77,18 +78,43 @@ namespace WFHMS.Web.Controllers
         [HttpPost]
         public async Task<IActionResult>Create(DepartmentCreateViewModel model)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                  
+                  var add = await PostAsync<DepartmentCreateViewModel>(model, Helper.DepartmentGetAll);
+                  return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
 
-            var add = await PostAsync<DepartmentCreateViewModel>(model,Helper.DepartmentGetAll);
-            return RedirectToAction("Index");
-
+                ModelState.AddModelError("", "Unable to save changes..Please contat your admin");
+                return View("Create");
+            }
+            return View("Create");
         }
-        
+
 
         [HttpPost]
         public async Task<IActionResult> Edit(DepartmentListViewModel model)
         {
-            var edit = await PutAsync<DepartmentListViewModel>(Helper.DepartmentEdits , model);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var edit = await PutAsync<DepartmentListViewModel>(Helper.DepartmentEdits, model);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("", "Unable to save changes..Please contat your admin");
+            }
+            return View("Edit");
+
         }
        
         [HttpPost]

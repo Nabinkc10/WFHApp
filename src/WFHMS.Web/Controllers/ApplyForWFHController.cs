@@ -53,22 +53,38 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult>Edit(int id)
         {
-            var edit = await GetAsync<ApplyForWFHListViewModel>(String.Format(Helper.ApplyForWFHEdits, id));
-            var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-            var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
-            ApplyForWFHListViewModel model = new ApplyForWFHListViewModel();
-            model = edit;
-            model.Department = DeptGetAll.Select(p => new SelectListItem
+            try
             {
-                Value = p.Id.ToString(),
-                Text = p.Name
-            }).ToList();
-            model.Employee = EmployeeGetAll.Select(p => new SelectListItem
+                var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+                var edit = await GetAsync<ApplyForWFHListViewModel>(String.Format(Helper.ApplyForWFHEdits, id));
+                if (edit == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                ApplyForWFHListViewModel model = new ApplyForWFHListViewModel();
+                model = edit;
+                model.Department = DeptGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model.Employee = EmployeeGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.FullName
+                }).ToList();
+                return View(model);
+
+            }
+            catch (Exception ex)
             {
-                Value = p.Id.ToString(),
-                Text = p.FullName
-            }).ToList();
-            return View(model);
+
+                throw ex;
+            }
+           
+           
+        
             //return View();
         }
 
@@ -90,16 +106,70 @@ namespace WFHMS.Web.Controllers
         [HttpPost] 
         public async Task<IActionResult> Create(ApplyForWFHCreateViewModel model)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var add = await PostAsync<ApplyForWFHCreateViewModel>(model, Helper.ApplyForWFHGetAll);
+                    return RedirectToAction("Index");
+                }
+                var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+                ApplyForWFHCreateViewModel model1 = new ApplyForWFHCreateViewModel();
+                model1.Department = DeptGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model1.Employee = EmployeeGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.FullName
+                }).ToList();
+                model = model1;
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
            
-            var add = await PostAsync<ApplyForWFHCreateViewModel>(model, Helper.ApplyForWFHGetAll);
-            return RedirectToAction("Index");
+         
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(ApplyForWFHListViewModel model)
         {
-            var edit = await PutAsync<ApplyForWFHListViewModel>(Helper.ApplyForWFHEdits, model);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var edit = await PutAsync<ApplyForWFHListViewModel>(Helper.ApplyForWFHEdits, model);
+                    return RedirectToAction("Index");
+                }
+                var DeptGetAll = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var EmployeeGetAll = await GetAsync<IEnumerable<EmployeeListViewModel>>(Helper.EmployeeGetAll);
+                ApplyForWFHListViewModel model1 = new ApplyForWFHListViewModel();
+                model1.Department = DeptGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model1.Employee = EmployeeGetAll.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.FullName
+                }).ToList();
+                model = model1;
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         [HttpPost]

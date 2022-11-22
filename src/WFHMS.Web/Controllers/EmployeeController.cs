@@ -50,22 +50,36 @@ namespace WFHMS.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-            var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
-            var edit = await GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeEdits, id));
-            EmployeeListViewModel model = new EmployeeListViewModel();
-            model = edit;
-            model.Department = DeptGet.Select(p => new SelectListItem
+            try
             {
-                Value = p.Id.ToString(),
-                Text = p.Name
-            }).ToList();
-            model.Designation = DegGet.Select(p => new SelectListItem
+                var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
+                var edit = await GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeEdits, id));
+                if(edit == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                EmployeeListViewModel model = new EmployeeListViewModel();
+                model = edit;
+                model.Department = DeptGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model.Designation = DegGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.DesignationName
+                }).ToList();
+                return View(model);
+            }
+            catch (Exception ex)
             {
-                Value = p.Id.ToString(),
-                Text = p.DesignationName
-            }).ToList();
-            return View(model);
+
+                throw ex;
+            }
+           
+          
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
@@ -91,14 +105,70 @@ namespace WFHMS.Web.Controllers
         [HttpPost]
         public async Task<IActionResult>Create(EmployeeCreateViewModel model)
         {
-            var add = await PostAsync<EmployeeCreateViewModel>(model, Helper.EmployeeGetAll);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var add = await PostAsync<EmployeeCreateViewModel>(model, Helper.EmployeeGetAll);
+                    return RedirectToAction("Index");
+                }
+                var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
+                EmployeeCreateViewModel model1 = new EmployeeCreateViewModel();
+                model1.Department = DeptGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model1.Designation = DegGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.DesignationName
+                }).ToList();
+                model = model1;
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
         [HttpPost]
         public async Task<IActionResult> Edit(EmployeeListViewModel model)
         {
-            var edit = await PutAsync<EmployeeListViewModel>(Helper.EmployeeEdits, model);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var edit = await PutAsync<EmployeeListViewModel>(Helper.EmployeeEdits, model);
+                    return RedirectToAction("Index");
+                }
+                var DeptGet = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                var DegGet = await GetAsync<IEnumerable<DesignationListViewModel>>(Helper.DesignationGetAll);
+                EmployeeListViewModel model1 = new EmployeeListViewModel();
+                model1.Department = DeptGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                }).ToList();
+                model1.Designation = DegGet.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.DesignationName
+                }).ToList();
+                model = model1;
+                return View(model);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+          
         }
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(Employee model)

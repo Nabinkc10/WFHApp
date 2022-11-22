@@ -12,7 +12,9 @@ namespace WFHMS.Models.ViewModel
     public class EmployeeListViewModel
     {
         public int Id { get; set; }
-        [StringLength(200)]
+        [StringLength(50)]
+        [Required(ErrorMessage = "Name is Required")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
         public string FullName { get; set; }
         public int EmployeeCode { get; set; }
         [StringLength(30)]
@@ -41,8 +43,9 @@ namespace WFHMS.Models.ViewModel
     public class EmployeeCreateViewModel
     {
 
+        [StringLength(50)]
         [Required(ErrorMessage = "Name is Required")]
-        [StringLength(200)]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
         public string FullName { get; set; }
         public int EmployeeCode { get; set; }
         [StringLength(30)]
