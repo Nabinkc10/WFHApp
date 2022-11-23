@@ -39,16 +39,32 @@ namespace WFHMS.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(DesignationCreateViewModel designation)
         {
-            await designationServices.Add(designation);
-            return Ok();
+            var existingdeg = await designationServices.CheckDuplicateAdd(designation);
+            if(existingdeg != null)
+            {
+                return BadRequest("Current Designation for Particular Department Already Exists!");
+            }
+            else
+            {
+                await designationServices.Add(designation);
+                return Ok();
+            }
         }
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(DesignationCreateViewModel designation)
+        public async Task<IActionResult> Edit(DesignationListViewModel designation)
         {
-            await designationServices.Update(designation);
-            return Ok();
+            var existing = await designationServices.CheckDuplicateUpdate(designation);
+            if( existing != null)
+            {
+                return BadRequest("Current Designation for Particular Department Already Exists!");
+            }
+            else
+            {
+                await designationServices.Update(designation);
+                return Ok();
+            } 
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)

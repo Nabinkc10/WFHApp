@@ -23,6 +23,6 @@ namespace WFHMS.Repository.Infrastructure
 
         void Delete(entity entity);
         void DeleteRange(IEnumerable<entity> entities);
-        Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate);
+        //Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate);
     }
 }

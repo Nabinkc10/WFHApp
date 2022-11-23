@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using System.Net;
 using WFHMS.Data.Entities;
 using WFHMS.Models.ViewModel;
 using WFHMS.Repository.Infrastructure;
@@ -15,9 +16,9 @@ namespace WFHMS.Web.Controllers
         private readonly ILogger<DepartmentController> _logger;
         private readonly HttpClient _httpClient;
         public readonly IConfiguration configure;
-        
 
-        
+
+
 
         public DepartmentController(ILogger<DepartmentController> logger, IConfiguration configure, HttpClient httpClient)
             : base(configure, httpClient)
@@ -25,9 +26,9 @@ namespace WFHMS.Web.Controllers
             _logger = logger;
             this.configure = configure;
             _httpClient = httpClient;
-            
-            
-             
+
+
+
         }
         public async Task<IActionResult> Index()
         {
@@ -37,13 +38,9 @@ namespace WFHMS.Web.Controllers
             model.Department = deptdis;
             return View(model);
         }
-        //public JsonResult IsDepartmentNameExist(string Name)
-        //{
-        //    string query = "select * from Department where DepartmentId = {0}"
-        //    return Json();
-        //}
+
         [HttpGet]
-        public async Task<IActionResult>Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -53,7 +50,7 @@ namespace WFHMS.Web.Controllers
             try
             {
                 var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
-                if(edit == null)
+                if (edit == null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -61,13 +58,10 @@ namespace WFHMS.Web.Controllers
             }
             catch (Exception ex)
             {
-                
-                ModelState.AddModelError("", "Unable to do this Task..Please contat your admin");
-                return View("Edit");
+
+                throw ex;
             }
-            //return View(edit);
-            //var edit = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentEdits, id));
-            //return View(edit);
+
         }
         [HttpGet]
         public IActionResult Delete(int? id)
@@ -76,26 +70,28 @@ namespace WFHMS.Web.Controllers
             return View(Delt);
         }
         [HttpPost]
-        public async Task<IActionResult>Create(DepartmentCreateViewModel model)
+        public async Task<IActionResult> Create(DepartmentCreateViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                  
-                  var add = await PostAsync<DepartmentCreateViewModel>(model, Helper.DepartmentGetAll);
-                  return RedirectToAction("Index");
+                    var add = await PostAsync<DepartmentCreateViewModel>(model, Helper.DepartmentGetAll);
+                    if (add.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        ModelState.AddModelError("", add.Content.ReadAsStringAsync().Result);
+                        return View(model);
+                    }
+                    return RedirectToAction("Index");
                 }
+                return View("Create");
+                
             }
             catch (Exception ex)
             {
-
-                ModelState.AddModelError("", "Unable to save changes..Please contat your admin");
-                return View("Create");
+                throw ex;
             }
-            return View("Create");
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Edit(DepartmentListViewModel model)
@@ -104,23 +100,28 @@ namespace WFHMS.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var edit = await PutAsync<DepartmentListViewModel>(Helper.DepartmentEdits, model);
+                   var edit = await PutAsync<DepartmentListViewModel>(Helper.DepartmentEdits, model);
+                    if (edit.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        ModelState.AddModelError("", edit.Content.ReadAsStringAsync().Result);
+                        return View(model);
+                    }
                     return RedirectToAction("Index");
                 }
+                return View("Edit");
             }
             catch (Exception ex)
             {
 
-                ModelState.AddModelError("", "Unable to save changes..Please contat your admin");
+                throw ex;
             }
-            return View("Edit");
-
+        
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> Delete(Department model)
         {
-           var del = await DeleteAsync<Department>(string.Format(Helper.DepartmentDeletes, model.Id));
+            var del = await DeleteAsync<Department>(string.Format(Helper.DepartmentDeletes, model.Id));
 
             return RedirectToAction("Index");
         }

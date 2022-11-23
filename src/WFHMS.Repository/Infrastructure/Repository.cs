@@ -42,10 +42,10 @@ namespace WFHMS.Repository.Infrastructure
         {
             return await _dbContext.Set<entity>().FirstOrDefaultAsync(predicate);
         }
-        public async Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate)
-        {
-            return await _dbContext.Set<entity>().SingleOrDefaultAsync(predicate);
-        }
+        //public async Task<entity> SingleOrDefaultAsync(Expression<Func<entity, bool>> predicate)
+        //{
+        //    return await _dbContext.Set<entity>().SingleOrDefaultAsync(predicate);
+        //}
 
         public IQueryable<entity> Query()
         {

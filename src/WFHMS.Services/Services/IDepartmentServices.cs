@@ -10,6 +10,8 @@ namespace WFHMS.Services.Services
 {
     public interface IDepartmentServices
     {
+        Task<Department> CheckDuplicateAdd(DepartmentCreateViewModel department);
+        Task<Department> CheckDuplicateUpdate(DepartmentListViewModel department);
         Task Add(DepartmentCreateViewModel department);
         Task Update(DepartmentListViewModel department);
         Task Delete(Department model);

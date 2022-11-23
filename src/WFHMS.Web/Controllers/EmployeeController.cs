@@ -94,12 +94,6 @@ namespace WFHMS.Web.Controllers
             model.DepartmentName = deptName.Name;
             model.DesignationName = designationName.DesignationName;
             return View(model);
-
-            //var getempbyId = GetAsync<EmployeeListViewModel>(String.Format(Helper.EmployeeDeletes, id)).Result;
-            //EmployeeListViewModel model = new EmployeeListViewModel();
-            //model.DepartmentName= getempbyId.DepartmentName;
-            //return View(model);
-
         }
 
         [HttpPost]

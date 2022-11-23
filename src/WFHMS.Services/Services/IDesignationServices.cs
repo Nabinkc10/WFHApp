@@ -12,8 +12,10 @@ namespace WFHMS.Services.Services
     {
         Task<Designation> GetAsync(int id);
         Task<IEnumerable<DesignationListViewModel>> GetAll();
+        Task<Designation> CheckDuplicateAdd(DesignationCreateViewModel designation);
         Task Add(DesignationCreateViewModel designation);
-        Task Update(DesignationCreateViewModel designation);
+        Task<Designation> CheckDuplicateUpdate(DesignationListViewModel designation);
+        Task Update(DesignationListViewModel designation);
         Task Delete(Designation model);
     }
 }

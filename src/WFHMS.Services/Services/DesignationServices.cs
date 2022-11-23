@@ -37,22 +37,26 @@ namespace WFHMS.Services.Services
             });
             return ret;
         }
+        public async Task<Designation> CheckDuplicateAdd(DesignationCreateViewModel designation)
+        {
+            var dupdegadd = await unitOfWork.Designation.FindAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
+            return dupdegadd;
+        }
         public async Task Add(DesignationCreateViewModel designation)
         {
-            Designation existingDesignation = await unitOfWork.Designation.SingleOrDefaultAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
-            if (existingDesignation != null)
-            {
-
-                unitOfWork.Dispose();
-            }
             var data = mapper.Map<DesignationCreateViewModel, Designation>(designation);
             await unitOfWork.Designation.Add(data);
             await unitOfWork.CompleteAsync();
 
         }
-        public async Task Update(DesignationCreateViewModel designation)
+        public async Task<Designation> CheckDuplicateUpdate(DesignationListViewModel designation)
         {
-            var edit = mapper.Map<DesignationCreateViewModel, Designation>(designation);
+            var dupdegupdate = await unitOfWork.Designation.FindAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
+            return dupdegupdate;
+        }
+        public async Task Update(DesignationListViewModel designation)
+        {
+            var edit = mapper.Map<DesignationListViewModel, Designation>(designation);
             await unitOfWork.Designation.Update(edit);
             await unitOfWork.CompleteAsync();
         }

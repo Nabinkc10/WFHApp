@@ -34,5 +34,6 @@ namespace WFHMS.Models.ViewModel
         [Required(ErrorMessage = "Department is Required")]
         public int DepartmentId { get; set; }
         public IEnumerable<SelectListItem>? Department { get; set; }
+
     }
 }

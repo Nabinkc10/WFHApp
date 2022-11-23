@@ -41,14 +41,14 @@ namespace WFHMS.Services.Services
             return retn;
 
         }
-
+        public async Task<Department> CheckDuplicateAdd(DepartmentCreateViewModel department)
+        {
+            var dupdepadd = await unitOfWork.Department.FindAsync(m => m.Name == department.Name);
+            return dupdepadd;
+        }
+       
         public async Task Add(DepartmentCreateViewModel department)
         {
-            Department existingDepartment = await unitOfWork.Department.SingleOrDefaultAsync(m => m.Name == department.Name);
-            if(existingDepartment != null)
-            { 
-              unitOfWork.Dispose();
-            }
             var data = mapper.Map<DepartmentCreateViewModel, Department>(department);
             await unitOfWork.Department.Add(data);
             await unitOfWork.CompleteAsync();
@@ -56,13 +56,14 @@ namespace WFHMS.Services.Services
 
 
         }
+        public async Task<Department> CheckDuplicateUpdate(DepartmentListViewModel department)
+        {
+            var dupdupedit = await unitOfWork.Department.FindAsync(m => m.Name == department.Name);
+            return dupdupedit;
+        }
+
         public async Task Update(DepartmentListViewModel department)
         {
-            Department existingDepartment = await unitOfWork.Department.SingleOrDefaultAsync(m => m.Name == department.Name);
-            if (existingDepartment != null)
-            {
-                unitOfWork.Dispose();
-            }
             var edit = mapper.Map<DepartmentListViewModel, Department>(department);
            await unitOfWork.Department.Update(edit);
            await unitOfWork.CompleteAsync();
