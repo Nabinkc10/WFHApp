@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="~/Themes/Admin/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="~/Themes/Admin/plugins/summernote/summernote-bs4.min.css">
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -46,6 +47,12 @@
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a asp-area="" asp-controller="Home" asp-action="Contacts" class="nav-link">Contacts</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+                </li>
+                 <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
                 </li>
             </ul>
 
@@ -206,7 +213,7 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul id="sidebar-nav" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
                         <li class="nav-item">
@@ -276,6 +283,7 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
+    
     <script src="~/Themes/Admin/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="~/Themes/Admin/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -310,5 +318,41 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/Themes/Admin/dist/js/pages/dashboard.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        console.log(document.getElementById('sidebar-nav'))
+        let navItems = document.getElementById('sidebar-nav').children;
+        function resetNav() {
+            for(let i=0;i<navItems.length;i++){
+                navItems[i].firstElementChild.classList.remove('active')
+            }
+        }
+          if(window.location.pathname === '/'){
+            console.log("Changed")
+            navItems[0].firstElementChild.classList.add('active');
+        }
+        if(window.location.pathname === '/Home/Privacy'){
+            console.log("Changed")
+            navItems[1].firstElementChild.classList.add('active');
+        }
+        if (window.location.pathname === '/Department') {
+            console.log("Changed")
+            navItems[2].firstElementChild.classList.add('active');
+        }
+        if (window.location.pathname === '/Designation') {
+            console.log("Changed")
+            navItems[3].firstElementChild.classList.add('active');
+        }
+        if (window.location.pathname === '/Employee') {
+            console.log("Changed")
+            navItems[4].firstElementChild.classList.add('active');
+        }
+        for(let i=0;i<navItems.length;i++){
+                navItems[i].addEventListener('click',function(e){
+                    resetNav();
+                    e.currentTarget.firstElementChild.classList.add('active');
+                })
+        }
+    </script>
 </body>
+
 </html>

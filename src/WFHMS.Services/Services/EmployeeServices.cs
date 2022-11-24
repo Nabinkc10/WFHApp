@@ -24,10 +24,9 @@ namespace WFHMS.Services.Services
         {
             return await unitOfWork.Employee.GetAsync(id);
         }
-        public async Task<IEnumerable<EmployeeListViewModel>>GetAll()
+        public IEnumerable<EmployeeListViewModel>GetAll()
         {
-            var emp = await unitOfWork.Employee.GetAll();
-
+            var emp = unitOfWork.Employee.GetAllWFH();
             var retn = emp.Select(p => new EmployeeListViewModel()
             {
                 Id = p.Id,
@@ -39,8 +38,8 @@ namespace WFHMS.Services.Services
                 DOB = p.DOB,
                 PhoneNumber = p.PhoneNumber,
                 Email = p.Email,
-                DesignationId = p.DesignationId
-                
+                DesignationName = p.Designation.DesignationName,
+                DepartmentName = p.Departments.Name
             });
             return retn;
 

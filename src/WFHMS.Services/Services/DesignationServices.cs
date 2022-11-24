@@ -27,17 +27,20 @@ namespace WFHMS.Services.Services
         }
         public async Task<IEnumerable<DesignationListViewModel>> GetAll()
         {
-            var deg = await unitOfWork.Designation.GetAllDesignation();
-
-                
+            var deg = await unitOfWork.Designation.GetAllDesignation();   
             var ret = deg.Select(p => new DesignationListViewModel()
             {
                 DesignationName = p.DesignationName,
                 Id = p.Id,
                 DepartmentId = p.DepartmentId,
-                DepartmenName=p.Departments.Name
+                DepartmentName=p.Departments.Name
             });
             return ret;
+        }
+        public async Task<Designation> CheckDuplicateAdd(DesignationCreateViewModel designation)
+        {
+            var dupdegadd = await unitOfWork.Designation.FindAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
+            return dupdegadd;
         }
         public async Task Add(DesignationCreateViewModel designation)
         {
@@ -46,9 +49,14 @@ namespace WFHMS.Services.Services
             await unitOfWork.CompleteAsync();
 
         }
-        public async Task Update(DesignationCreateViewModel designation)
+        public async Task<Designation> CheckDuplicateUpdate(DesignationListViewModel designation)
         {
-            var edit = mapper.Map<DesignationCreateViewModel, Designation>(designation);
+            var dupdegupdate = await unitOfWork.Designation.FindAsync(m => m.DesignationName == designation.DesignationName && m.DepartmentId == designation.DepartmentId);
+            return dupdegupdate;
+        }
+        public async Task Update(DesignationListViewModel designation)
+        {
+            var edit = mapper.Map<DesignationListViewModel, Designation>(designation);
             await unitOfWork.Designation.Update(edit);
             await unitOfWork.CompleteAsync();
         }

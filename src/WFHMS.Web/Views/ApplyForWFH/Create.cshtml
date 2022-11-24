@@ -7,7 +7,7 @@
 
 <h1>Create</h1>
 
-<h4>ApplyForWFHCreateViewModel</h4>
+<h4>ApplyForWFH</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,12 +20,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="From" class="control-label"></label>
-                <input asp-for="From" class="form-control" />
+                <input asp-for="From"value="@DateTime.Now" class="form-control" />
                 <span asp-validation-for="From" class="text-danger"></span>
+                
             </div>
             <div class="form-group">
                 <label asp-for="To" class="control-label"></label>
-                <input asp-for="To" class="form-control" />
+                <input asp-for="To" value="@DateTime.Now" class="form-control" />
                 <span asp-validation-for="To" class="text-danger"></span>
             </div>
         @*    <div class="form-group">
@@ -42,7 +43,6 @@
                     <option selected="selected" value="FullDay">FullDay</option>
                     <option selected="selected" value="FirstHalf">FirstHalf</option>
                     <option selected="selected" value="SecondHalf">SecondHalf</option>
-
                 </select>
 
                 <span asp-validation-for="LeaveType" class="text-danger"></span>
@@ -74,7 +74,7 @@
            
             <div class="form-group">
                 <label asp-for="Reason" class="control-label"></label>
-                <input asp-for="Reason" class="form-control" />
+                <textarea asp-for="Reason" class="form-control" rows="2" cols="20"></textarea>
                 <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -83,7 +83,6 @@
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

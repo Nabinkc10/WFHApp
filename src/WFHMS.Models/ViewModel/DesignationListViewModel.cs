@@ -11,9 +11,14 @@ namespace WFHMS.Models.ViewModel
     public class DesignationListViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Name is Required")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
+        [StringLength(30)]
         public string DesignationName { get; set; }
+        
+        public string DepartmentName { get; set; }
+        [Required(ErrorMessage = "Department is Required")]
         public int DepartmentId { get; set; }
-        public string DepartmenName { get; set; }
         public IEnumerable<SelectListItem>? Department { get; set; }
         public IEnumerable<DesignationListViewModel>? Designation { get; set; }
     }
@@ -21,11 +26,14 @@ namespace WFHMS.Models.ViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is Required")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
         [StringLength(30)]
         public string DesignationName { get; set; }
+        public string DepartmentName { get; set; }
 
         [Required(ErrorMessage = "Department is Required")]
         public int DepartmentId { get; set; }
         public IEnumerable<SelectListItem>? Department { get; set; }
+
     }
 }

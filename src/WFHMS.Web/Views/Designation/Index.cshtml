@@ -21,7 +21,7 @@ else {
             <thead>
                     <tr>
                     <th>DesignationName</th>
-                     <th>DepartmentId</th>
+                     <th>DepartmentName</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@ else {
                 {
                    <tr>
                        <td>@item.DesignationName</td>
-                       <td>@item.DepartmentId</td>
+                       <td>@item.DepartmentName</td>
                        <td>
                            <a asp-action="Edit" asp-controller="Designation" asp-route-id="@item.Id" class="btn btn-outline-success">
                                Edit

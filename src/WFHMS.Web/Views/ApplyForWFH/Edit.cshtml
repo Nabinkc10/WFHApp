@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>ApplyForWFHListViewModel</h4>
+<h4>ApplyForWFH</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -73,6 +73,11 @@
                     <option selected="selected" value="">Please select Department</option>
                 </select>
                 <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reason" class="control-label"></label>
+                <textarea asp-for="Reason" class="form-control" rows="2" cols="20"></textarea>
+                <span asp-validation-for="Reason" class="text-danger"></span>
             </div>
          @*   <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>

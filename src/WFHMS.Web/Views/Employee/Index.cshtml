@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Our Employees</h1>
 
-<h4>EmployeeListViewModel</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <a asp-action="Create" asp-controller="Employee" class="btn btn-outline-success">
@@ -27,9 +27,9 @@ else {
      <div class="row">
         <table class="table">
             <thead>
-                    <tr>
-                    <th>Picture</th>
-                    <th>FullName</th>
+                   <tr>
+                   @* <th>Picture</th>*@
+                     <th>FullName</th>
                      <th>EmployeeCode</th>
                      <th>Gender</th>
                      <th>PicturePath</th>
@@ -37,16 +37,17 @@ else {
                      <th>DOB</th>
                      <th>PhoneNumberr</th>
                      <th>Email</th>
-                     <th>DesignationId</th>
-                    </tr>
+                     <th>DepartmentName</th>
+                     <th>DesignationName</th>
+                   </tr>
                     </thead>
                     <tbody>
                 @foreach (var item in Model.Employee)
                 {
                    <tr>
-                       <td>
+                       @*<td>
                        <img src="@item.PicturePath" height="100" width="110"/>
-                       </td>
+                       </td>*@
                        <td>@item.FullName</td>
                        <td>@item.EmployeeCode</td>
                        <td>@item.Gender</td>
@@ -55,7 +56,8 @@ else {
                        <td>@item.DOB</td>
                        <td>@item.PhoneNumber</td>
                        <td>@item.Email</td>
-                       <td>@item.DesignationId</td>
+                       <td>@item.DepartmentName</td>
+                       <td>@item.DesignationName</td>
                        <td>
                            <a asp-action="Edit" asp-controller="Employee" asp-route-id="@item.Id" class="btn btn-outline-success">
                                Edit
@@ -70,6 +72,4 @@ else {
             </tbody>
         </table>
     </div>
-}
-
 }

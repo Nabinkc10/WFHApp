@@ -24,7 +24,9 @@ namespace WFHMS.Data.Entities
         public string PhoneNumber { get; set; }
         [StringLength(300)]
         public string Email { get; set; }
-
+        [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
+        public virtual Department Departments { get; set; }
         [ForeignKey("Designation")]
         public int DesignationId { get; set; }
         public virtual Designation Designation { get; set; }
