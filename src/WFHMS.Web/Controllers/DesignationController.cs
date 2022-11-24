@@ -43,11 +43,13 @@ namespace WFHMS.Web.Controllers
                 }).ToList();
                 return View(model);
             }
+          
             catch (Exception ex)
             {
 
                 throw ex;
             }
+
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -56,7 +58,7 @@ namespace WFHMS.Web.Controllers
             {
                 var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
                 var edit = await GetAsync<DesignationListViewModel>(String.Format(Helper.DesignationEdits, id));
-                if(edit == null)
+                if (edit == null)
                 {
                     return RedirectToAction("Index");
                 }
@@ -88,37 +90,28 @@ namespace WFHMS.Web.Controllers
         {
             try
             {
+                var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
+                var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                DesignationCreateViewModel model1 = new DesignationCreateViewModel();
+                model1.Department = Desgn.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+
+                }).ToList();
+                model = model1;
                 if (ModelState.IsValid)
                 {
-                    var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
                     if (add.StatusCode == HttpStatusCode.BadRequest)
                     {
                         ModelState.AddModelError("", add.Content.ReadAsStringAsync().Result);
-                        var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-                        DesignationCreateViewModel model1 = new DesignationCreateViewModel();
-                        model1.Department = Desgn.Select(p => new SelectListItem
-                        {
-                            Value = p.Id.ToString(),
-                            Text = p.Name
 
-                        }).ToList();
-                        model = model1;
                         return View(model);
                     }
-                    return RedirectToAction("Index"); 
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    var add = await PostAsync<DesignationCreateViewModel>(model, Helper.DesignationGetAll);
-                    var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-                    DesignationCreateViewModel model1 = new DesignationCreateViewModel();
-                    model1.Department = Desgn.Select(p => new SelectListItem
-                    {
-                        Value = p.Id.ToString(),
-                        Text = p.Name
-
-                    }).ToList();
-                    model = model1;
                     return View(model);
                 }
             }
@@ -126,7 +119,7 @@ namespace WFHMS.Web.Controllers
             {
                 throw ex;
             }
-           
+
         }
 
         [HttpPost]
@@ -134,44 +127,36 @@ namespace WFHMS.Web.Controllers
         {
             try
             {
+                var edit = await PutAsync<DesignationListViewModel>(Helper.DesignationEdits, model);
+                var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
+                DesignationListViewModel model1 = new DesignationListViewModel();
+                model1.Department = Desgn.Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+
+                }).ToList();
+                model = model1;
                 if (ModelState.IsValid)
                 {
-                    var edit = await PutAsync<DesignationListViewModel>(Helper.DesignationEdits, model);
-                    if(edit.StatusCode == HttpStatusCode.BadRequest)
+                    
+                    if (edit.StatusCode == HttpStatusCode.BadRequest)
                     {
                         ModelState.AddModelError("", edit.Content.ReadAsStringAsync().Result);
-                        var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-                        DesignationListViewModel model1 = new DesignationListViewModel();
-                        model1.Department = Desgn.Select(p => new SelectListItem
-                        {
-                            Value = p.Id.ToString(),
-                            Text = p.Name
-
-                        }).ToList();
-                        model = model1;
                         return View(model);
                     }
+                    return RedirectToAction("Index");
                 }
-
-                //var Desgn = await GetAsync<IEnumerable<DepartmentListViewModel>>(Helper.DepartmentGetAll);
-                //DesignationListViewModel model1 = new DesignationListViewModel();
-                //model1.Department = Desgn.Select(p => new SelectListItem
-                //{
-                //    Value = p.Id.ToString(),
-                //    Text = p.Name
-
-                //}).ToList();
-                //model = model1;
-                //return View(model);
+                else
+                {
+                    return View(model);
+                }
             }
             catch (Exception ex)
             {
-
                 throw ex;
-                
             }
-            return RedirectToAction("Index");
-                            
+
         }
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(Designation model)

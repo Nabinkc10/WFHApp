@@ -12,7 +12,7 @@ namespace WFHMS.Models.ViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is Required")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
         [StringLength(30)]
         public string DesignationName { get; set; }
         
@@ -26,7 +26,7 @@ namespace WFHMS.Models.ViewModel
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is Required")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Use letters only please")]
         [StringLength(30)]
         public string DesignationName { get; set; }
         public string DepartmentName { get; set; }

@@ -64,9 +64,9 @@ namespace WFHMS.Web.Controllers
 
         }
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var Delt = GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentDeletes, id)).Result;
+            var Delt = await GetAsync<DepartmentListViewModel>(String.Format(Helper.DepartmentDeletes, id));
             return View(Delt);
         }
         [HttpPost]
@@ -121,9 +121,27 @@ namespace WFHMS.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Department model)
         {
-            var del = await DeleteAsync<Department>(string.Format(Helper.DepartmentDeletes, model.Id));
+            try
+            {
+                if (ModelState.IsValid)
+                {
 
-            return RedirectToAction("Index");
+                    var del = await DeleteAsync<Department>(string.Format(Helper.DepartmentDeletes, model.Id));
+                    if (del.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        ModelState.AddModelError("", del.Content.ReadAsStringAsync().Result);
+                        return View(model);
+                    }
+                    return RedirectToAction("Index");
+                }
+                return View("Delete");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
     }

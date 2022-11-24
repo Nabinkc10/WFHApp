@@ -26,6 +26,7 @@ namespace WFHMS.Models.ViewModel
         public DateTime DOB { get; set; }
         [Required(ErrorMessage = "Phone Number is Required!")]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression("(?:\\(?\\+977\\)?)?[9][6-9]\\d{8}|01[-]?[0-9]{7}", ErrorMessage ="Phone number NOT Valid!")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Email is Required!")]
         [DataType(DataType.EmailAddress)]
@@ -57,6 +58,7 @@ namespace WFHMS.Models.ViewModel
         public DateTime DOB { get; set; }
         [Required(ErrorMessage = "Phone Number is Required!")]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression("(?:\\(?\\+977\\)?)?[9][6-9]\\d{8}|01[-]?[0-9]{7}", ErrorMessage = "Phone number NOT Valid!")]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Email is Required!")]
         [DataType(DataType.EmailAddress)]
